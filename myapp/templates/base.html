@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>{% block title %}PeopleDesk{% endblock %} · PeopleDesk</title>
+    <script>
+        try {
+            if (localStorage.getItem("peopledesk-theme") === "dark") {
+                document.documentElement.dataset.theme = "dark";
+            }
+        } catch (error) {
+            // The page remains usable when browser storage is unavailable.
+        }
+    </script>
+    <link rel="stylesheet" href="{% static 'myapp/css/app.css' %}">
+    <script src="{% static 'myapp/js/app.js' %}" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="icon-button sidebar-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="app-sidebar">
+                <span aria-hidden="true">☰</span>
+            </button>
+            <a class="brand" href="/">
+                <span class="brand-mark" aria-hidden="true">P</span>
+                <span>People<span class="brand-light">Desk</span></span>
+            </a>
+            <div class="topbar-tools">
+                {% block topbar_tools %}{% endblock %}
+                <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+                    <span class="theme-icon" aria-hidden="true">◐</span>
+                    <span class="theme-label">Dark mode</span>
+                </button>
+                <a class="button button-primary button-small topbar-add" href="/Add/">
+                    <span aria-hidden="true">＋</span> Add person
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="app-frame">
+        <button class="sidebar-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+        <aside class="app-sidebar" id="app-sidebar" aria-label="Sidebar navigation">
+            <p class="sidebar-label">Workspace</p>
+            <nav class="sidebar-nav">
+                <a class="sidebar-link{% if request.path == '/' %} is-active{% endif %}" href="/">
+                    <span class="sidebar-icon" aria-hidden="true">▦</span><span class="sidebar-text">Directory</span>
+                </a>
+                <a class="sidebar-link{% if '/Add/' in request.path %} is-active{% endif %}" href="/Add/">
+                    <span class="sidebar-icon" aria-hidden="true">＋</span><span class="sidebar-text">Add a person</span>
+                </a>
+            </nav>
+            <div class="sidebar-note">
+                <span class="sidebar-note-icon" aria-hidden="true">✦</span>
+                <span class="sidebar-text">Your contacts, all in one place.</span>
+            </div>
+        </aside>
+        <main class="page-shell">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <footer class="site-footer">A simpler way to manage your people.</footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}People directory{% endblock %}
+
+{% block topbar_tools %}
+    {% if records %}
+    <label class="search-box">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <span class="visually-hidden">Search directory</span>
+        <input type="search" id="directory-search" placeholder="Search people..." autocomplete="off">
+        <kbd>Ctrl K</kbd>
+    </label>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Workspace</p>
+        <h1>People directory</h1>
+        <p class="subtitle">Keep your contact details organized in one place.</p>
+    </div>
+    <a class="button button-primary" href="/Add/"><span aria-hidden="true">＋</span> Add a person</a>
+</section>
+
+<section class="card directory-card" aria-label="People directory">
+    {% if records %}
+    <div class="table-wrap">
+        <table class="people-table">
+            <thead>
+                <tr>
+                    <th scope="col">Person</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in records %}
+                <tr data-person-row>
+                    <td>
+                        <div class="person-cell">
+                            {% if rec.photo %}
+                                <img src="{{ rec.photo.url }}" class="avatar" alt="{{ rec.name }}">
+                            {% else %}
+                                <span class="avatar avatar-placeholder" aria-hidden="true">{{ rec.name|first|upper }}</span>
+                            {% endif %}
+                            <span>{{ rec.name }}</span>
+                        </div>
+                    </td>
+                    <td>{{ rec.email }}</td>
+                    <td>{{ rec.mobile_number }}</td>
+                    <td>{{ rec.date_of_birth|date:"M j, Y" }}</td>
+                    <td>
+                        <div class="action-links">
+                            <a href="/View/{{ rec.id }}">View</a>
+                            <a href="/Edit/{{ rec.id }}">Edit</a>
+                            <a class="delete-link" href="/Delete/{{ rec.id }}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="search-empty" id="search-empty" hidden>No people match your search. Try another name or email.</p>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon" aria-hidden="true">＋</div>
+        <h2>Your directory is ready</h2>
+        <p>Add your first person to get started.</p>
+        <a class="button button-primary" href="/Add/">Add a person</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="card detail-card">
+        <p class="eyebrow">Contact profile</p>
+        <h1>Person details</h1>
+        <div class="detail-person">
+            {% if user.photo %}
+                <img src="{{ user.photo.url }}" class="detail-avatar" alt="{{ user.name }}">
+            {% else %}
+                <span class="detail-avatar avatar-placeholder" aria-hidden="true">{{ user.name|first|upper }}</span>
+            {% endif %}
+            <div>
+                <h2>{{ user.name }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+        <dl class="detail-list">
+            <div class="detail-row">
+                <dt>Mobile number</dt>
+                <dd>{{ user.mobile_number }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Date of birth</dt>
+                <dd>{{ user.date_of_birth|date:"F j, Y" }}</dd>
+            </div>
+            <div class="detail-row">
+                <dt>Password</dt>
+                <dd>Not displayed <span class="privacy-note">for privacy</span></dd>
+            </div>
+        </dl>
+        <div class="form-actions">
+            <a href="/" class="button button-secondary">Back to directory</a>
+            <a href="/Edit/{{ user.id }}" class="button button-primary">Edit details</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

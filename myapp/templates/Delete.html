@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Delete person{% endblock %}
+
+{% block content %}
+<div class="confirm-layout">
+    <section class="card confirm-card">
+        <div class="confirm-icon" aria-hidden="true">!</div>
+        <p class="eyebrow">Please confirm</p>
+        <h1>Delete this person?</h1>
+        <p>This action can't be undone{% if user %} and will remove {{ user.name }} from your directory{% endif %}.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="confirm-actions">
+                <a href="/" class="button button-secondary">Keep person</a>
+                <button type="submit" class="button button-danger">Yes, delete</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

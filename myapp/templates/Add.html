@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Add a person{% endblock %}
+
+{% block content %}
+<div class="form-layout">
+    <section class="card form-card">
+        <p class="eyebrow">New contact</p>
+        <h1>Add a person</h1>
+        <p class="form-intro">Enter their details below. You can update this information later.</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-actions">
+                <button type="submit" class="button button-primary">Save person</button>
+                <a href="/" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}
